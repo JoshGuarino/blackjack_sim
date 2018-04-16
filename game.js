@@ -67,6 +67,21 @@ function shuffleDeck(array)
     return array;   
 } 
 
+//change aces in player hand from 11 to 1
+function changeAces(array)
+{
+    var pLength = array.length;
+    for (let i=3; i < pLength; i++)
+    {
+        if(array[i].suits === "ace")
+        {
+            array[i].cardValue = 1;
+        }
+    }
+}
+
+
+
 //shuffleDeck(deck);
 //console.log(deck);
 
@@ -110,6 +125,10 @@ for(let i=0; i < 20; i++)
         {
             let arrNum1 = 5;
             player1.push(deck.pop());
+            if(p1Total>21)
+            {
+                changeAces(player1);
+            }
             p1Total = p1Total + player1[arrNum1].numValue;
             arrNum1++;
         }
@@ -120,6 +139,10 @@ for(let i=0; i < 20; i++)
         {
             let arrNum2 = 5;
             player2.push(deck.pop());
+            if(p2Total>21)
+            {
+                changeAces(player2);
+            }
             p2Total = p2Total + player2[arrNum2].numValue;
             arrNum2++;
         }
@@ -130,6 +153,10 @@ for(let i=0; i < 20; i++)
         {
             let arrNum3 = 5;
             player3.push(deck.pop());
+            if(p3Total>21)
+            {
+                changeAces(player3);
+            }
             p3Total = p3Total + player3[arrNum3].numValue;
             arrNum3++;
         }
@@ -140,6 +167,10 @@ for(let i=0; i < 20; i++)
         {
             let arrNum4 = 5;
             player4.push(deck.pop());
+            if(p4Total>21)
+            {
+                changeAces(player4);
+            }
             p4Total = p4Total + player4[arrNum4].numValue;
             arrNum4++;
         }
@@ -150,6 +181,10 @@ for(let i=0; i < 20; i++)
         {
             let arrNum5 = 5;
             dealer.push(deck.pop());
+            if(dealerTotal>21)
+            {
+                changeAces(dealer);
+            }
             dealerTotal = dealerTotal + dealer[arrNum5].numValue;
             arrNum5++;   
         } 
@@ -249,7 +284,7 @@ for(let i=0; i < 20; i++)
     {
         deck.pop();
     }
-}    
+}     
 
 var p1Money=player1[1]-200, p2Money=player2[1]-200, p3Money=player3[1]-200, p4Money=player4[1]-200;
 console.log(player1[0] + " has made $" + p1Money +".");
@@ -270,4 +305,4 @@ console.log(dealer[0] + " has made $" + dealer[1] +".");
 // console.log(p4Total);
 // console.log(dealerTotal);
 
-//console.log(deck);
+// console.log(deck);

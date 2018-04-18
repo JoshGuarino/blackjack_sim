@@ -19,7 +19,7 @@ var dealer = {name: 'The House', money: 0, active: true, handCount: 0, hand: []}
 //var players = [player1, player2, player3, player4, dealer];
 
 const _numberOfDecks = 1; // 1-8 max  Math.floor(Math.random()*8)
-const _rounds = 1;
+const _rounds = 20;
 var suits = ['hearts', 'diamonds','spades','clubs'];
 var card = ["ace",'2','3','4','5','6','7','8','9','10',"jack","queen","king"];
 var deck = [];
@@ -80,8 +80,11 @@ function initalDeal(Object)
 //players place there bets
 function placeBets(Object)
 {
-    Object.money = Object.money-15;
-    dealer.money = dealer.money+15;
+    if(Object.active===true)
+    {
+        Object.money = Object.money-15;
+        dealer.money = dealer.money+15;
+    }
     return Object;
 }
    
@@ -160,12 +163,12 @@ function clearDeck(Array)
 
 
 
-shuffleDeck(deck);
+//shuffleDeck(deck);
 //console.log(deck);
 
 
 //main game structure
-for(let i=0; i < _rounds; i++)
+for(let n=0; n < _rounds; n++)
 {
      shuffleDeck(deck);
 
@@ -210,24 +213,17 @@ for(let i=0; i < _rounds; i++)
 
 
 //output results
-var p1Money=player1.money-200, p2Money=player2.money-200, p3Money=player3.money-200, p4Money=player4.money-200;
-console.log(player1.name + " has made $" + p1Money +".");
-console.log(player2.name + " has made $" + p2Money +".");
-console.log(player3.name + " has made $" + p3Money +".");
-console.log(player4.name + " has made $" + p4Money +".");
-console.log(dealer.name + " has made $" + dealer.money +".");
+// var p1Money=player1.money-200, p2Money=player2.money-200, p3Money=player3.money-200, p4Money=player4.money-200;
+// console.log(player1.name + " has made $" + p1Money +".");
+// console.log(player2.name + " has made $" + p2Money +".");
+// console.log(player3.name + " has made $" + p3Money +".");
+// console.log(player4.name + " has made $" + p4Money +".");
+// console.log(dealer.name + " has made $" + dealer.money +".");
 
-// console.log(player1);
-// console.log(player2);
-// console.log(player3);
-// console.log(player4);
-// console.log(dealer);   
-
-
-// console.log(player1[3]);
-// console.log(player2[3]);
-// console.log(player3[3]);
-// console.log(player4[3]);
-// console.log(dealer[3]);
+console.log(player1);
+console.log(player2);
+console.log(player3);
+console.log(player4);
+console.log(dealer);   
 
 //console.log(deck);

@@ -10,27 +10,23 @@
 // Dealer Hits on 16 and Below
 // 
 
-//var shuffleDeck = require('./deck.js');
-//var Cards = require('./cards.js');
+var player1 = {name: 'huey', money: 200, active:true, handCount: 0, hand: []}
+var player2 = {name: 'Dewey', money: 200, active: true, handCount: 0, hand: []}
+var player3 = {name: 'Lewey', money: 200, active: true, handCount: 0, hand: []}
+var player4 = {name: 'Scrooge', money: 200, active: true, handCount: 0, hand: []}
+var dealer = {name: 'The House', money: 0, active: true, handCount: 0, hand: []}
 
-var player1 = ['Heuy', 200, true, 0];
-var player2 = ['Dewey', 200, true, 0];
-var player3 = ['Lewey', 200, true, 0];
-var player4 = ['Scrooge', 200, true, 0];
-var dealer = ['The House', 0, true, 0];
-
-var players = [player1, player2, player3, player4, dealer];
+//var players = [player1, player2, player3, player4, dealer];
 
 const _numberOfDecks = 1; // 1-8 max  Math.floor(Math.random()*8)
-const _rounds = 20;
-const numerOfCards = _numberOfDecks*52
+const _rounds = 1;
 var suits = ['hearts', 'diamonds','spades','clubs'];
 var card = ["ace",'2','3','4','5','6','7','8','9','10',"jack","queen","king"];
 var deck = [];
-//module.exports._numberOfDecks = _numberOfDecks;
+
 
 //initialize and shuffle deck
-function shuffleDeck(array)
+function shuffleDeck(Array)
 {
     for(let j=1; j<=_numberOfDecks; j++)
     {
@@ -40,123 +36,144 @@ function shuffleDeck(array)
             {
                 if(card[n]==="2" || card[n]==="3" || card[n]==="4" || card[n]==="5" || card[n]==="6" || card[n]==="7" || card[n]==="8" || card[n]==="9")
                 {
-                    array.push({suit: suits[i], cardValue: card[n], numValue: n+1});
+                    Array.push({suit: suits[i], cardValue: card[n], numValue: n+1});
                 }
                 else if(card[n]==="jack" || card[n]==="queen" || card[n]==="king" || card[n]==="10")
                 {
-                    array.push({suit: suits[i], cardValue: card[n], numValue: 10});
+                    Array.push({suit: suits[i], cardValue: card[n], numValue: 10});
                 }
                 else
                 {
-                    array.push({suit: suits[i], cardValue: card[n], numValue: 11});
+                    Array.push({suit: suits[i], cardValue: card[n], numValue: 11});
                 }
             }
         }
     }
-    function shuffleCard(array)
+    function shuffleCard(Array)
     {
         let i = 0, j = 0, temp = null;
 
-        for (i = array.length - 1; i > 0; i--)
+        for (i = Array.length - 1; i > 0; i--)
         {
-            j = Math.floor(Math.random() * (array.length));
-            temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
+            j = Math.floor(Math.random() * (Array.length));
+            temp = Array[i];
+            Array[i] = Array[j];
+            Array[j] = temp;
         }
     }
-    shuffleCard(array);
-    return array;   
+    shuffleCard(Array);
+    return Array;   
 } 
-
-//change aces in player hand from 11 to 1
-function changeAces(array)
-{
-    var pLength = array.length;
-    for (let i=4; i < pLength; i++)
-    {
-        if(array[i].suits === "ace")
-        {
-            array[i].numValue = 1;
-        }
-    }
-    return array;
-}
 
 
 //inital deal
-function initalDeal(array)
+function initalDeal(Object)
 {
-    if(array[2]===true)
+    if(Object.active===true)
     {
-        array.push(deck.pop()); array.push(deck.pop()); array[1] = array[1]-15;
-        array[3] = array[4].numValue + array[5].numValue;        
+        Object.hand.push(deck.pop());  Object.hand.push(deck.pop());     
+        Object.handCount = Object.hand[0].numValue + Object.hand[1].numValue;      
     }
-    return array;
+    return Object;
 }    
 
+//players place there bets
+function placeBets(Object)
+{
+    Object.money = Object.money-15;
+    dealer.money = dealer.money+15;
+    return Object;
+}
+   
 
 //player turn
-function playerTurn(array)
+function playerTurn(Object)
 {
-    if(array[2]===true)
+    if(Object.active===true)
     {
-        let arrNum = 6;
-        while(array[3] <= 16)
+        let countNum = 2;
+        while(Object.handCount <= 16)
         {
-            array.push(deck.pop());
-            if(array[3]>21)
+            Object.hand.push(deck.pop());
+            Object.handCount = Object.handCount + Object.hand[countNum].numValue;
+            if(Object.handCount > 21)
             {
-                changeAces(array);
+                let handCount = Object.hand.length;
+                for(let i=0; i < handCount; i++)
+                {
+                    if(Object.hand[i].cardValue==="ace")
+                    {
+                        Object.hand[i].numValue = 1;
+                    }
+                }
             }
-            array[3] = array[3] + array[arrNum].numValue;
-            arrNum++;
+            countNum++;
         }
     }
-    return array;
+    return Object;
 }
 
-
-//determine outcomes
-function determineOutcome(array)
+// determine outcomes
+function determineOutcome(Object)
 {
-    if(array[2]===true)
+    if(Object.active===true)
     {
-        if(array[3] <= 21 && dealer[3] < array[3])
+        if(Object.handCount <= 21 && dealer.handCount < Object.handCount)
         {
-            array[1] = array[1]+30;
-            dealer[1] = dealer[1]-15;
+            Object.money = Object.money+30;
+            dealer.money = dealer.money-15;
         }
         else
         {
-            dealer[1] = dealer[1]+15;
-            if(array[1] < 15)
+            if(Object.money < 15)
             {
-                array[2] = false;
+                Object.active = false;
             }
         }
     }
+    return Object;
 }
 
 
-//clear players hands
-function clearHand(array)
+//clear player hands
+function clearHand(Object)
 {
-    var arrLength = array.length;
-    for(let i=4; i < arrLength; i++)
+    Object.handCount = 0;
+    let handLength = Object.hand.length;
+    for(let i=0; i < handLength; i++)
     {
-        array.pop();
+        Object.hand.pop();
     }
+    return Object;
+}
+
+//clear deck
+function clearDeck(Array)
+{
+    var deckLength = Array.length;
+    for(let i=0; i < deckLength; i++)
+    {
+        Array.pop();
+    }
+    return Array;
 }
 
 
 
-//shuffleDeck(deck);
+shuffleDeck(deck);
 //console.log(deck);
 
+
+//main game structure
 for(let i=0; i < _rounds; i++)
 {
-    shuffleDeck(deck);
+     shuffleDeck(deck);
+
+    //place bets
+    placeBets(player1);
+    placeBets(player2);
+    placeBets(player3);
+    placeBets(player4);
 
     //deal the cards
     initalDeal(player1);
@@ -186,32 +203,31 @@ for(let i=0; i < _rounds; i++)
     clearHand(player4);
     clearHand(dealer);
 
+    
     //clear deck
-    var deckLength = deck.length;
-    for(let i=0; i < deckLength; i++)
-    {
-        deck.pop();
-    }
-}     
-
-var p1Money=player1[1]-200, p2Money=player2[1]-200, p3Money=player3[1]-200, p4Money=player4[1]-200;
-console.log(player1[0] + " has made $" + p1Money +".");
-console.log(player2[0] + " has made $" + p2Money +".");
-console.log(player3[0] + " has made $" + p3Money +".");
-console.log(player4[0] + " has made $" + p4Money +".");
-console.log(dealer[0] + " has made $" + dealer[1] +".");
-
-console.log(player1);
-console.log(player2);
-console.log(player3);
-console.log(player4);
-console.log(dealer);   
+    clearDeck(deck);
+}
 
 
-console.log(player1[3]);
-console.log(player2[3]);
-console.log(player3[3]);
-console.log(player4[3]);
-console.log(dealer[3]);
+//output results
+var p1Money=player1.money-200, p2Money=player2.money-200, p3Money=player3.money-200, p4Money=player4.money-200;
+console.log(player1.name + " has made $" + p1Money +".");
+console.log(player2.name + " has made $" + p2Money +".");
+console.log(player3.name + " has made $" + p3Money +".");
+console.log(player4.name + " has made $" + p4Money +".");
+console.log(dealer.name + " has made $" + dealer.money +".");
 
-// console.log(deck);
+// console.log(player1);
+// console.log(player2);
+// console.log(player3);
+// console.log(player4);
+// console.log(dealer);   
+
+
+// console.log(player1[3]);
+// console.log(player2[3]);
+// console.log(player3[3]);
+// console.log(player4[3]);
+// console.log(dealer[3]);
+
+//console.log(deck);

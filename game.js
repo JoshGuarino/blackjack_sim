@@ -124,7 +124,7 @@ function determineOutcome(Object)
         if(Object.handCount <= 21 && dealer.handCount < Object.handCount)
         {
             Object.money = Object.money+30;
-            dealer.money = dealer.money-15;
+            dealer.money = dealer.money-30;
         }
         else
         {
@@ -213,17 +213,17 @@ for(let n=0; n < _rounds; n++)
 
 
 //output results
-// var p1Money=player1.money-200, p2Money=player2.money-200, p3Money=player3.money-200, p4Money=player4.money-200;
-// console.log(player1.name + " has made $" + p1Money +".");
-// console.log(player2.name + " has made $" + p2Money +".");
-// console.log(player3.name + " has made $" + p3Money +".");
-// console.log(player4.name + " has made $" + p4Money +".");
-// console.log(dealer.name + " has made $" + dealer.money +".");
+var p1Money=player1.money-200, p2Money=player2.money-200, p3Money=player3.money-200, p4Money=player4.money-200;
+console.log(player1.name + " has made $" + p1Money +".");
+console.log(player2.name + " has made $" + p2Money +".");
+console.log(player3.name + " has made $" + p3Money +".");
+console.log(player4.name + " has made $" + p4Money +".");
+console.log(dealer.name + " has made $" + dealer.money +".");
 
-console.log(player1);
-console.log(player2);
-console.log(player3);
-console.log(player4);
-console.log(dealer);   
+// console.log(player1);
+// console.log(player2);
+// console.log(player3);
+// console.log(player4);
+// console.log(dealer);   
 
 //console.log(deck);

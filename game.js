@@ -10,6 +10,8 @@
 // Dealer Hits on 16 and Below
 // 
 
+
+
 var players = [player1 = {name: 'huey', money: 200, active:true, handCount: 0, hand: []},
                player2 = {name: 'Dewey', money: 200, active: true, handCount: 0, hand: []},
                player3 = {name: 'Lewey', money: 200, active: true, handCount: 0, hand: []},
@@ -104,9 +106,9 @@ function playerTurn(player)
 {
     if(player.active===true)
     {
-        let countNum = 2;
         while(player.handCount <= 16)
         {
+            let countNum = 2;
             player.hand.push(deck.pop());
             player.handCount = player.handCount + player.hand[countNum].numValue;
             if(player.handCount > 21)

@@ -10,11 +10,6 @@
 // Dealer Hits on 16 and Below
 // 
 
-// var player1 = {name: 'huey', money: 200, active:true, handCount: 0, hand: []}
-// var player2 = {name: 'Dewey', money: 200, active: true, handCount: 0, hand: []}
-// var player3 = {name: 'Lewey', money: 200, active: true, handCount: 0, hand: []}
-// var player4 = {name: 'Scrooge', money: 200, active: true, handCount: 0, hand: []}
-
 var players = [player1 = {name: 'huey', money: 200, active:true, handCount: 0, hand: []},
                player2 = {name: 'Dewey', money: 200, active: true, handCount: 0, hand: []},
                player3 = {name: 'Lewey', money: 200, active: true, handCount: 0, hand: []},
@@ -160,24 +155,24 @@ function dealerTurn(dealer)
 
 
 // determine outcomes
-function determineOutcome(Object)
+function determineOutcome(player)
 {
-    if(Object.active===true)
+    if(player.active===true)
     {
-        if(Object.handCount <= 21 && dealer.handCount < Object.handCount)
+        if(player.handCount <= 21 && dealer.handCount < player.handCount)
         {
-            Object.money = Object.money+30;
+            player.money = player.money+30;
             dealer.money = dealer.money-30;
         }
         else
         {
-            if(Object.money < 15)
+            if(player.money < 15)
             {
-                Object.active = false;
+                player.active = false;
             }
         }
     }
-    return Object;
+    return player;
 }
 
 
@@ -275,4 +270,6 @@ console.log(dealer.name + " has made $" + dealer.money +".");
 // console.log(player4);
 // console.log(dealer);   
 
-//console.log(deck);
+// console.log(deck);
+
+//players.forEach(element => {console.log(element)});
